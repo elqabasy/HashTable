@@ -1,2 +1,3 @@
-# HashTable
-HashTable Implementation for datastructures course
+# Stack
+
+Stack
