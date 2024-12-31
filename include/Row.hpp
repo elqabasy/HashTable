@@ -2,6 +2,7 @@
 #define HASH_TABLE_ROW_HPP
 #include "Node.hpp"
 #include <iostream>
+#include <optional>
 using namespace std;
 
 namespace HashTable{
@@ -18,7 +19,8 @@ namespace HashTable{
 
             // methods
             void remove(const int& key);
-            Node<DataType>* find(const int& key, Node<DataType>* prev)const;
+            Node<DataType>* find(const int& key)const;
+            Node<DataType>* previous(const int& key)const;
             void insert(const int& key, const DataType& value);
 
 

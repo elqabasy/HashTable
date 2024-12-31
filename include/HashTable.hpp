@@ -8,7 +8,7 @@ namespace HashTable{
     class HashTable{
         private:            
             int _length;
-            Row<DataType>* _table;
+            Row<DataType>** _table;
 
             // methods
             int hash(const int& key)const;
@@ -26,6 +26,8 @@ namespace HashTable{
             bool isEmpty()const;
             bool isNotEmpty()const;
 
+
+            
 
             // other
             Row<DataType>* getRow(const int& key)const;

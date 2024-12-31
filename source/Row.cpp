@@ -1,6 +1,7 @@
 
 #include "Row.hpp"
 #include <iostream>
+#include <optional>
 using namespace std;
 
 namespace HashTable{
@@ -30,6 +31,7 @@ namespace HashTable{
     void Row<DataType>::insert(const int& key, const DataType& value){
         Node<DataType>* result = find(key);
 
+
         if(result == 0){ // key not found
             // insert at head
             _head->appendNode(new Node(key, value));
@@ -39,19 +41,30 @@ namespace HashTable{
             // update exists value based on logic
             result->setValue(value);
         }
+        cout << "here" << endl;
+        cout << result << endl;
+        
     }
 
     template<class DataType>
-    Node<DataType>* Row<DataType>::find(const int& key, Node<DataType>* prev)const{
-        // 
-        if (_head->getKey() == key){
-            return prev = _head;
+    Node<DataType>* Row<DataType>::previous(const int& key) const {
+        Node<DataType>* prev;
+        for (Node<DataType>* it = _head; it != nullptr; it = it->getNext()) {
+            if (it->getKey() == key) {
+                return prev;
+            }
+            prev = it;
         }
+        return 0;
+    }
+
+
+    template<class DataType>
+    Node<DataType>* Row<DataType>::find(const int& key)const{
         
-        for(Node<DataType>* it = _head; it->_next != nullptr; it++){
-            if (it->_next->getKey() == key){
-                prev = it;
-                return it->_next;
+        for(Node<DataType>* it = _head; it != nullptr; it++){
+            if (it->getKey() == key){
+                return it;
             }
         }
         return 0;

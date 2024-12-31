@@ -6,7 +6,7 @@ namespace HashTable{
     // Constructor
     template<class DataType>
     HashTable<DataType>::HashTable(const int& size){
-        _table = new Row<DataType>[size];
+        _table = new Row<DataType>*[size];
     }
 
     // private methods
@@ -21,7 +21,7 @@ namespace HashTable{
         // check if table is empty
         if(isEmpty()) return 0;
 
-        Row<DataType>* row = getRow(key)
+        Row<DataType>* row = getRow(key);
 
         // check if row is empty
         if(row == 0) return 0;
@@ -38,7 +38,9 @@ namespace HashTable{
     void HashTable<DataType>::insert(const int& key, const DataType& value){
         const int index = hash(key);
         
+        Row<DataType>* row = getRow(key);
         
+        row->insert(key, value);
     }
 
 
