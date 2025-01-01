@@ -1,3 +1,1 @@
-# Stack
-
-Stack
+# Hash Table
