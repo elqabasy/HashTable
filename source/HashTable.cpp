@@ -1,85 +1,91 @@
 #include "HashTable.hpp"
-#include "Utils.hpp"
 
-namespace HashTable{
+namespace HashTableNamespace {
 
-    // Constructor
-    template<class DataType>
-    HashTable<DataType>::HashTable(const int& size):_length(0), _size(size){
-        _table = new Row<DataType>*[size];
+template<class DataType>
+HashTable<DataType>::HashTable(int size)
+    : capacity(size), table(size, nullptr) {}
 
-        for (int x = 0; x < size; x++) {
-            _table[x] = new Row<DataType>(); 
+template<class DataType>
+HashTable<DataType>::~HashTable() {
+    for (auto& node : table) {
+        while (node) {
+            Node<DataType>* temp = node;
+            node = node->getNext();
+            delete temp;
         }
-        
     }
+}
 
-    // private methods
-    template<class DataType>
-    int HashTable<DataType>::hash(const int& key)const{
-        return key % _size;
+template<class DataType>
+int HashTable<DataType>::hashFunction(int key) const {
+    return key % capacity; // Simple modulo-based hash function
+}
+
+template<class DataType>
+void HashTable<DataType>::insert(int key, const DataType& value) {
+    int index = hashFunction(key);
+    Node<DataType>* newNode = new Node<DataType>(key, value);
+
+    if (!table[index]) {
+        table[index] = newNode;
+    } else {
+        Node<DataType>* current = table[index];
+        while (current->getNext()) {
+            current = current->getNext();
+        }
+        current->setNext(newNode);
     }
+}
 
-    // methods
-    template <class DataType>
-    Node<DataType>* HashTable<DataType>::search(const int &key){
-        // check if table is empty
-                
-        if(isEmpty()) return 0;
+template<class DataType>
+bool HashTable<DataType>::remove(int key) {
+    int index = hashFunction(key);
+    Node<DataType>* current = table[index];
+    Node<DataType>* prev = nullptr;
 
-        Row<DataType>* row = getRow(key);
-        // check if row is empty
-        if(row == 0) return 0;
-
-        // check if key is exists in this row
-
-        Node<DataType>* node = row->find(key);
-        if (node == 0) return 0;
-        
-        return 0;
+    while (current) {
+        if (current->getKey() == key) {
+            if (prev) {
+                prev->setNext(current->getNext());
+            } else {
+                table[index] = current->getNext();
+            }
+            delete current;
+            return true;
+        }
+        prev = current;
+        current = current->getNext();
     }
+    return false;
+}
 
+template<class DataType>
+DataType HashTable<DataType>::search(int key) const {
+    int index = hashFunction(key);
+    Node<DataType>* current = table[index];
 
-    template<class DataType>
-    void HashTable<DataType>::insert(const int& key, const DataType& value){
-        const int index = hash(key);
-        Row<DataType>* row = getRow(key);
-        
-
-        // cout << row->insert(key, value) << endl;
-        row->insert(key, value);
-        _length++;
+    while (current) {
+        if (current->getKey() == key) {
+            return current->getValue();
+        }
+        current = current->getNext();
     }
+    throw runtime_error("Key not found");
+}
 
-
-    // other
-    template<class DataType> 
-    Row<DataType>* HashTable<DataType>::getRow(const int& key)const{
-        const int index = hash(key);
-        return _table[index];
+template<class DataType>
+void HashTable<DataType>::display() const {
+    for (int i = 0; i < capacity; ++i) {
+        cout << "Index " << i << ": ";
+        Node<DataType>* current = table[i];
+        while (current) {
+            current->display();
+            cout << " -> ";
+            current = current->getNext();
+        }
+        cout << "nullptr" << endl;
     }
+}
 
-    // status
-    template<class DataType>
-    int HashTable<DataType>::length()const{
-        return _length;
-    }
-    template<class DataType>
-    bool HashTable<DataType>::isEmpty()const{
-        return _table == 0;
-    }
-    template<class DataType>
-    bool HashTable<DataType>::isNotEmpty()const{
-        return !isEmpty();
-    }
-
-
-
-    // Destructor
-    template<class DataType>
-    HashTable<DataType>::~HashTable(){
-        // destroy table here
-        delete _table;
-    }
-    
-} // namespace HashTable
+} // namespace HashTableNamespace

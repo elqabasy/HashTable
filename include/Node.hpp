@@ -1,47 +1,35 @@
-#ifndef HASH_TABLE_NODE_HPP
-#define HASH_TABLE_NODE_HPP
-#include<iostream>
+#ifndef NODE_HPP
+#define NODE_HPP
+
+#include <iostream>
 using namespace std;
+#include <string>
 
-namespace HashTable{
-    template <class DataType>
-    class Node{
-        private:
-            int _key;
-            Node* _next;
-            DataType _value;
-        public:
-            // Constructor
-            Node(const int& key, const DataType& value);
-            Node(const int& key, const DataType& value, Node* next);
-            
+namespace HashTableNamespace {
 
-            // functionality
+template<class DataType>
+class Node {
+private:
+    int key;                 // Key is always an integer
+    DataType value;          // Value is templated
+    Node* next;
 
-            // setters
-            void setNext(Node* next);
-            void setKey(const int& key);
-            void setValue(const DataType& value);
+public:
+    Node(int key, const DataType& value, Node* next = nullptr);
 
-            // special
-            Node* appendNode(Node* node);
+    void setNext(Node* next);
+    Node* getNext() const;
 
-            // getters
-            int getKey()const;
-            Node* getNext();
-            DataType getValue()const;
+    int getKey() const;
+    DataType getValue() const;
 
+    string toString()const;
 
-            // methods
-            void display();
-            string toString()const;
+    void display() const;
+};
 
-            Node* operator++();
-            Node* operator++(int);
-            
-            // Destructor
-            ~Node();
-    };    
-} // namespace Node
-#include "../source/Node.cpp"
-#endif // HASH_TABLE_NODE_HPP
+} // namespace HashTableNamespace
+
+#include "../source/Node.cpp" // Include the implementation
+
+#endif // NODE_HPP
