@@ -2,12 +2,13 @@
 #define HASH_TABLE_HPP
 #include "Row.hpp"
 #include "Utils.hpp"
+#include "Node.hpp"
 
 namespace HashTable{
     template<class DataType>
     class HashTable{
         private:            
-            int _length;
+            int _length, _size;
             Row<DataType>** _table;
 
             // methods
@@ -17,7 +18,7 @@ namespace HashTable{
             HashTable(const int& size);
             
             // methods
-            DataType* search(const int& key);
+            Node<DataType>* search(const int& key);
             void insert(const int& key, const DataType& value);
 
 
@@ -27,10 +28,9 @@ namespace HashTable{
             bool isNotEmpty()const;
 
 
-            
-
             // other
             Row<DataType>* getRow(const int& key)const;
+
             
             // Destructor
             ~HashTable();

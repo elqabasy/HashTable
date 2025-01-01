@@ -16,7 +16,6 @@ namespace HashTable{
             // Constructor
             Row();
 
-
             // methods
             void remove(const int& key);
             Node<DataType>* find(const int& key)const;

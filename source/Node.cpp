@@ -1,5 +1,6 @@
 #include  "Node.hpp"
 #include <iostream>
+#include <fmt/format.h>
 using namespace std;
 
 
@@ -17,6 +18,9 @@ namespace HashTable{
     // special
     template<class DataType>
     Node<DataType>* Node<DataType>::appendNode(Node<DataType>* node){
+        if (!node) {
+            return nullptr;
+        }
         node->setNext(this->_next);
         this->_next = node;
         return node;
@@ -55,15 +59,17 @@ namespace HashTable{
     // getters
     template<class DataType>
     int Node<DataType>::getKey()const{
+
         return this->_key;
     }
     template<class DataType>
-    Node<DataType>* Node<DataType>::getNext()const{
+    Node<DataType>* Node<DataType>::getNext(){
         return this->_next;
     }
     template<class DataType>
     DataType Node<DataType>::getValue()const{
-        return this->_value;
+        
+        return _value;
     }
 
 
@@ -75,7 +81,8 @@ namespace HashTable{
 
     template<class DataType>
     string Node<DataType>::toString()const{
-        return "toString(this)";    
+        // cout << "er87r"<< endl;
+        return fmt::format("Node(key={}, value={})", _key, _value);
     }
     // Destructor
     template<class DataType>

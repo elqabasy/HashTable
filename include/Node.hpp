@@ -28,7 +28,7 @@ namespace HashTable{
 
             // getters
             int getKey()const;
-            Node* getNext()const;
+            Node* getNext();
             DataType getValue()const;
 
 

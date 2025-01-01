@@ -7,7 +7,7 @@ using namespace std;
 namespace HashTable{
     // Constructor
     template<class DataType>
-    Row<DataType>::Row(){
+    Row<DataType>::Row():_length(0), _head(nullptr){
         
     }
 
@@ -31,38 +31,32 @@ namespace HashTable{
     void Row<DataType>::insert(const int& key, const DataType& value){
         Node<DataType>* result = find(key);
 
-
-        if(result == 0){ // key not found
-            // insert at head
-            _head->appendNode(new Node(key, value));
-            _length++;
-            return ;
-        }else{ // key is exists
-            // update exists value based on logic
-            result->setValue(value);
+        if (_head == nullptr) {
+            _head = new Node<DataType>(key, value);
+        } else {
+            _head->appendNode(new Node<DataType>(key, value));
         }
-        cout << "here" << endl;
-        cout << result << endl;
+        _length++;
         
     }
 
     template<class DataType>
     Node<DataType>* Row<DataType>::previous(const int& key) const {
-        Node<DataType>* prev;
+        Node<DataType>* prev = nullptr;
         for (Node<DataType>* it = _head; it != nullptr; it = it->getNext()) {
             if (it->getKey() == key) {
                 return prev;
             }
             prev = it;
         }
-        return 0;
+        return nullptr;
+
     }
 
 
     template<class DataType>
     Node<DataType>* Row<DataType>::find(const int& key)const{
-        
-        for(Node<DataType>* it = _head; it != nullptr; it++){
+        for(Node<DataType>* it = _head; it != nullptr; it = it->getNext()){
             if (it->getKey() == key){
                 return it;
             }
