@@ -6,6 +6,11 @@
         "type_traits": "cpp",
         "xlocmon": "cpp",
         "xtr1common": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "functional": "cpp",
+        "xstring": "cpp",
+        "vector": "cpp",
+        "stdexcept": "cpp",
+        "iostream": "cpp"
     }
 }

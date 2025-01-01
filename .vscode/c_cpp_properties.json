@@ -5,7 +5,8 @@
             "includePath": [
                 "${default}",
                 "${workspaceFolder}/include",
-                "C:\\tools\\vcpkg\\installed\\x64-windows\\include"
+                "C:\\tools\\vcpkg\\installed\\x64-windows\\include",
+                "${workspaceFolder}/source"
             ],
             "defines": [
                 "_DEBUG",
